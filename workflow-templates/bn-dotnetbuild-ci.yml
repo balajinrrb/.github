@@ -1,0 +1,43 @@
+name: BN DotNet Build
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkoutm
+        uses: actions/checkout@v3
+
+      - name: Octo CLI Install
+        uses: OctopusDeploy/install-octopus-cli-action@v1
+        with:
+          # The Octopus CLI Version is set to be latest.
+          version: latest
+
+      - name: Nuget Setup Install
+        uses: nuget/setup-nuget@v1
+        with:
+          # Nuget Packge Vesrion is set to be 5.X, If you want to change, please do so.
+          nuget-version: "5.x"
+
+      - name: DotNet Install
+        uses: actions/setup-dotnet@v3
+        with:
+          #DotNet-Version has been spesified to 6.0.x. If you want to change, Please do so.
+          dotnet-version: |
+            6.0.x
+      
+      - name: Nuget Restore
+        run: nuget restore "Include the Solution File Path .sln"
+          
+      - name: Dot Net Restore & Build
+        run: |
+          echo "Installing Dependency"
+          dotnet restore
+          echo "DotNet Build"
+          dotnet build "Include the Solution File Path .sln" --configuration Release --no-restore
