@@ -1,0 +1,8 @@
+{
+    "name": "BN Dot Net Build",
+    "description": "BN Dot Net Build CI starter workflow.",
+    "iconName": "example-icon",
+    "categories": [
+        "DoetNet"
+    ],
+}
